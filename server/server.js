@@ -30,6 +30,20 @@ app.post('/lions', function(req, res) {
 });
 
 
+/*
+app.param('id', fucntion)
+{
+  var lion = _.find(lions, {id:id})
+  if (lion) {
+    req.lion = lion
+    next()
+  }
+  else {
+    res.send();
+  }
+}*/
+
+
 app.put('/lions/:id', function(req, res) {
   var update = req.body;
   if (update.id) {
@@ -44,6 +58,35 @@ app.put('/lions/:id', function(req, res) {
     res.json(updatedLion);
   }
 });
+
+//Delete a lion at a specific ID
+app.delete('/lions/:id', function(req,res){
+  var lion = _.find(lions, {id: req.params.id});
+
+    var index = lions.indexOf(lion);
+    lions.splice(index, 1);
+    res.json(lions)
+
+
+});
+
+//Delete all lions available
+app.delete('/lions', function(req,res){
+
+  var update = req.body;
+
+  var size = lions.length;
+
+
+  lions.splice(0,size);
+  id = 0;
+  res.json(lions);
+
+});
+
+
+
+
 
 app.set('port', (process.env.PORT || 8080));
 
